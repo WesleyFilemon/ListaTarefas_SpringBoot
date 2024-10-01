@@ -1,0 +1,37 @@
+ ////// A PRAZO
+ {
+        "description": "Teste task 1",
+        "completed": false,
+        "taskType": "PRAZO",
+        "daysToComplete": 10,
+        "priority": "ALTA"
+    }
+
+    //// DATA
+
+      {
+        "description": "Teste task 2",
+        "completed": true,
+        "taskType": "DATA",
+        "dueDate": "2024-07-14",
+        "daysToComplete": null,
+        "priority": "BAIXA"
+    }
+
+    /////// LIVRE
+
+    {
+        "description": "Teste task 7",
+        "completed": false,
+        "taskType": "LIVRE",
+        "dueDate": "2024-07-14",
+        "daysToComplete": null,
+        "priority": "MEDIA"
+    }
+
+
+    /////Create////api/task
+    /////Update//api/task/1
+    ////Get//////api/task/3
+    ////Delete////api/task/7
+    ///// npm start /// iniciar frontend

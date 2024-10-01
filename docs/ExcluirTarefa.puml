@@ -1,0 +1,30 @@
+@startuml
+title Diagrama de Sequencia  - Excluir Tarefa
+actor Usuário
+Boundary Frontend
+Boundary SpringBoot
+Control taskController
+Participant taskService
+Participant taskRepository
+activate SpringBoot
+Usuário -> Frontend: Excluir Tarefa
+activate Usuário
+activate Frontend
+Frontend -> SpringBoot: DELETE api/tasks/{id}
+group Roteiro01Application [Spring Boot Java Application]
+SpringBoot -> taskController: deleteTask(Long id)
+activate taskController
+taskController -> taskService: deleteTask(id)
+activate taskService
+taskService -> taskRepository: deleteById(id)
+activate taskRepository
+taskRepository --> taskService: void
+destroy taskRepository
+taskService --> taskController: boolean deleted
+destroy taskService
+taskController --> SpringBoot: ResponseEntity<Void> ResponseEntity.status(deleted ? NO_CONTENT : NOT_FOUND)
+destroy taskController
+end
+SpringBoot --> Frontend : ResponseEntity<Void> ResponseEntity.status(deleted ? NO_CONTENT : NOT_FOUND)
+Frontend --> Usuário: Status da Exclusão
+@enduml

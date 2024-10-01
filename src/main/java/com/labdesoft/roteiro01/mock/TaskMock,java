@@ -1,0 +1,17 @@
+package com.labdesoft.roteiro01.mock;
+
+import com.labdesoft.roteiro01.entity.Task;
+
+import java.util.Arrays;
+import java.util.List;
+
+
+public class TaskMock {
+
+    public static List<Task> createTasks() {
+        Task task1 = new Task(1L, "Task 1", "Description 1");
+        Task task2 = new Task(2L, "Task 2", "Description 2");
+        
+        return Arrays.asList(task1, task2);
+    }
+}

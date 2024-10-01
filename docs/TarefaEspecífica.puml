@@ -1,0 +1,31 @@
+@startuml
+title Diagrama de Sequencia  - Retornar Tarefa Específica
+actor Usuário
+Boundary Frontend
+Boundary SpringBoot
+Control taskController
+Entity Task
+Participant taskService
+Participant taskRepository
+activate SpringBoot
+Usuário -> Frontend: Retornar Tarefa Específica
+activate Usuário
+activate Frontend
+Frontend -> SpringBoot: GET api/tasks/{id}
+group Roteiro01Application [Spring Boot Java Application]
+SpringBoot -> taskController: getTaskById(Long id)
+activate taskController
+taskController -> taskService: getTaskById(id)
+activate taskService
+taskService -> taskRepository: findById(id)
+activate taskRepository
+taskRepository --> taskService: Optional<Task>
+destroy taskRepository
+taskService --> taskController: Optional<Task>
+destroy taskService
+taskController --> SpringBoot: ResponseEntity<Task> ResponseEntity.ok(task) or ResponseEntity.notFound()
+destroy taskController
+end
+SpringBoot --> Frontend : ResponseEntity<Task> ResponseEntity.ok(task) or ResponseEntity.notFound()
+Frontend --> Usuário: Task or Not Found
+@enduml

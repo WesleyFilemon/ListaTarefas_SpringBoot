@@ -1,0 +1,31 @@
+@startuml
+title Diagrama de Sequencia  - Atualizar Tarefa
+actor Usuário
+Boundary Frontend
+Boundary SpringBoot
+Control taskController
+Entity Task
+Participant taskService
+Participant taskRepository
+activate SpringBoot
+Usuário -> Frontend: Atualizar Tarefa
+activate Usuário
+activate Frontend
+Frontend -> SpringBoot: PUT api/tasks/{id}
+group Roteiro01Application [Spring Boot Java Application]
+SpringBoot -> taskController: updateTask(Long id, Task)
+activate taskController
+taskController -> taskService: updateTask(task)
+activate taskService
+taskService -> taskRepository: save(task)
+activate taskRepository
+taskRepository --> taskService: Task updatedTask
+destroy taskRepository
+taskService --> taskController: Task updatedTask
+destroy taskService
+taskController --> SpringBoot: ResponseEntity<Task> ResponseEntity.ok(updatedTask)
+destroy taskController
+end
+SpringBoot --> Frontend : ResponseEntity<Task> ResponseEntity.ok(updatedTask)
+Frontend --> Usuário: Task Atualizada
+@enduml

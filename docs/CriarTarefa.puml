@@ -1,0 +1,31 @@
+@startuml
+title Diagrama de Sequencia  - Criar Nova Tarefa
+actor Usuário
+Boundary Frontend
+Boundary SpringBoot
+Control taskController
+Entity Task
+Participant taskService
+Participant taskRepository
+activate SpringBoot
+Usuário -> Frontend: Criar Nova Tarefa
+activate Usuário
+activate Frontend
+Frontend -> SpringBoot: POST api/tasks/
+group Roteiro01Application [Spring Boot Java Application]
+SpringBoot -> taskController: createTask(Task)
+activate taskController
+taskController -> taskService: createTask(task)
+activate taskService
+taskService -> taskRepository: save(task)
+activate taskRepository
+taskRepository --> taskService: Task savedTask
+destroy taskRepository
+taskService --> taskController: Task savedTask
+destroy taskService
+taskController --> SpringBoot: ResponseEntity<Task> ResponseEntity.created(savedTask)
+destroy taskController
+end
+SpringBoot --> Frontend : ResponseEntity<Task> ResponseEntity.created(savedTask)
+Frontend --> Usuário: Task Criada
+@enduml
